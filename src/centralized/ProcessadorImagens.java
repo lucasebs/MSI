@@ -1,3 +1,5 @@
+package centralized;
+
 import java.awt.image.BufferedImage;
 import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 

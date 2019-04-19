@@ -1,3 +1,5 @@
+package centralized;
+
 import java.util.LinkedList;
 
 public class Buffer {

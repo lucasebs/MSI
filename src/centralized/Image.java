@@ -1,3 +1,5 @@
+package centralized;
+
 import java.awt.image.BufferedImage;
 
 public class Image {
