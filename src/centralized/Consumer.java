@@ -56,7 +56,7 @@ public class Consumer implements  Runnable {
 
             try {
 
-                File f = new File("src/output/" + this.img.getFile_name() + this.img.getBrilho() + ".jpg");
+                File f = new File("src/output/centralized/" + this.img.getFile_name() + this.img.getBrilho() + ".jpg");
                 ImageIO.write(img_out, "jpg", f);
             } catch (IOException e) {
                 e.printStackTrace();
