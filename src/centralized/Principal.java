@@ -12,11 +12,11 @@ public class Principal {
         ArrayList<Semaphore> ocupados = new ArrayList<Semaphore>();
         ArrayList<Consumer> consumers = new ArrayList<Consumer>();
         ArrayList<Thread> threads = new ArrayList<Thread>();
-        Integer quantidadeThreads = 3;
+        Integer quantidadeThreads = 2;
 
 
         for (int i=0;i<quantidadeThreads;i++) {
-            Semaphore livre = new Semaphore(10);
+            Semaphore livre = new Semaphore(2);
             Semaphore ocupado = new Semaphore(0);
             Buffer buffer = new Buffer();
             Consumer c = new Consumer(buffer,livre,ocupado);

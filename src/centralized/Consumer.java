@@ -11,22 +11,22 @@ import java.util.logging.Logger;
 
 public class Consumer implements  Runnable {
     private Buffer buffer;
-    private Semaphore livre;
-    private Semaphore ocupado;
+    private Semaphore free;
+    private Semaphore block;
     private Image img;
     private ArrayList<Long> tempos;
     private Long tempoMedio;
 
-    public Consumer(Buffer buffer, Semaphore livre, Semaphore ocupado) {
-        System.out.println("Consumer criado...");
+    public Consumer(Buffer buffer, Semaphore free, Semaphore block) {
+        System.out.println("{ Consumer - Builded }");
         this.buffer = buffer;
-        this.livre = livre;
-        this.ocupado = ocupado;
+        this.free = free;
+        this.block = block;
     }
 
     @Override
     public void run() {
-        System.out.println("Consumer rodando...");
+        System.out.println("{ Consumer - Running }");
 
         ProcessadorImagens proc = new ProcessadorImagens();
 
@@ -34,36 +34,36 @@ public class Consumer implements  Runnable {
             long inicio = System.currentTimeMillis();
             try {
 
-                System.out.println("Consumer - ocupa...");
-                ocupado.acquire();
+                System.out.println("{ Consumer : Block }");
+                block.acquire();
             } catch (InterruptedException ex) {
                 Logger.getLogger(Consumer.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             this.img = buffer.remove();
             if (this.img.isEnd()){
-                System.out.println("Consumer encerado...");
+                System.out.println("{ Consumer - Done }");
 //                tempoMedio =
                 break;
             }
 
-            livre.release();
-            System.out.println("Consumer - libera...");
-            System.out.println("Imagem " + this.img.getFile_name() + this.img.getBrilho() +  " retirada do Buffer...");
+            free.release();
+            System.out.println("{ Consumer : Free }");
+            System.out.println(" - Get image '" + this.img.getFile_name() + this.img.getBrilho() +  "' from Buffer...");
 
             BufferedImage img_out = proc.brilho(this.img.getImg(), this.img.getBrilho());
-            System.out.println("Imagem " + this.img.getFile_name() + this.img.getBrilho() +  " processada...");
+            System.out.println(" - Image '" + this.img.getFile_name() + this.img.getBrilho() +  "' processed...");
 
             try {
 
-                File f = new File("test/" + this.img.getFile_name() + this.img.getBrilho() + ".jpg");
+                File f = new File("src/output/" + this.img.getFile_name() + this.img.getBrilho() + ".jpg");
                 ImageIO.write(img_out, "jpg", f);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            System.out.println("Imagem " + this.img.getFile_name() + this.img.getBrilho() +  " salva...");
+            System.out.println(" - Image '" + this.img.getFile_name() + this.img.getBrilho() +  "' saved...");
             long fim = System.currentTimeMillis();
-            tempos.add(fim-inicio);
+//            tempos.add(fim-inicio);
         }
     }
 }

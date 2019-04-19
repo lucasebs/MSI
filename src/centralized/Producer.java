@@ -12,18 +12,21 @@ import java.util.logging.Logger;
 
 public class Producer implements Runnable {
     private ArrayList<Buffer> buffers;
-    private ArrayList<Semaphore> livres;
-    private ArrayList<Semaphore> ocupados;
+    private ArrayList<Semaphore> free;
+    private ArrayList<Semaphore> blocked;
     private Integer consumidores;
     private Integer quantidadeImagens;
 
     private Random r = new Random();
 
-    public Producer(ArrayList<Buffer> buffers, ArrayList<Semaphore> livres, ArrayList<Semaphore> ocupados) {
-        System.out.println("Producer criado...");
+    private String img_name = "sample_image";
+    private String img_extension = ".jpg";
+
+    public Producer(ArrayList<Buffer> buffers, ArrayList<Semaphore> free, ArrayList<Semaphore> blocked) {
+        System.out.println("[ Producer - Builded ]");
         this.buffers = buffers;
-        this.livres = livres;
-        this.ocupados = ocupados;
+        this.free = free;
+        this.blocked = blocked;
         this.consumidores = buffers.size();
     }
 
@@ -35,10 +38,10 @@ public class Producer implements Runnable {
 //            this.qtds[i] = r.nextInt(8);
 //        };
 
-        System.out.println("Producer rodando...");
+        System.out.println("[ Producer - Running ]");
 
         int cont = 0;
-        this.quantidadeImagens = 50;
+        this.quantidadeImagens = 10;
         int i = 0;
 
         while (true) {
@@ -49,24 +52,25 @@ public class Producer implements Runnable {
             Buffer buffer = buffers.get(i);
 
             try {
-                livres.get(i).acquire();
-                System.out.println("Producer ocupa...");
+                free.get(i).acquire();
+                System.out.println("[ Producer : Block ]");
 
             } catch (InterruptedException ex) {
                 Logger.getLogger(Producer.class.getName()).log(Level.SEVERE, null, ex);
             }
             Image img = null;
-            System.out.println(cont-(this.quantidadeImagens/2));
+//            System.out.println(cont-(this.quantidadeImagens/2));
             try {
-                File f = new File("imagem_exemplo" + ".jpg");
-                img = new Image(ImageIO.read(f),"imagem_exemplo_processada_",cont-(this.quantidadeImagens/2));
+                File f = new File("src/input/"+ this.img_name + this.img_extension);
+//                img = new Image(ImageIO.read(f),this.img_name + "processed_ ",cont-(this.quantidadeImagens/2));
+                img = new Image(ImageIO.read(f),this.img_name + "_processed_", cont);
             } catch (IOException e) {
                 System.out.println("Erro: " + e);
             }
-            System.out.println("Adicionando Imagem " + i );
+            System.out.println(" - Adding image... " + i );
             buffer.insert(img);
-            ocupados.get(i).release();
-            System.out.println("Producer libera...");
+            blocked.get(i).release();
+            System.out.println("[ Producer : Free ]");
 
             cont++;
             i = cont % this.consumidores;
@@ -75,13 +79,16 @@ public class Producer implements Runnable {
         for (int h=0; h<consumidores;h++){
             Image img = new Image();
             try {
-                livres.get(h).acquire();
+                free.get(h).acquire();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             Buffer buffer = buffers.get(h);
             buffer.insert(img);
-            ocupados.get(h).release();
+            blocked.get(h).release();
         }
+
+        System.out.println("[ Producer - Done ]");
+
     }
 }
