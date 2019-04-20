@@ -15,7 +15,7 @@ public class Producer implements Runnable {
     private ArrayList<Semaphore> free;
     private ArrayList<Semaphore> blocked;
     private Integer consumidores;
-    private Integer quantidadeImagens;
+    private Integer quantidadeImagens = 10;
 
     private Random r = new Random();
 
@@ -38,10 +38,9 @@ public class Producer implements Runnable {
 //            this.qtds[i] = r.nextInt(8);
 //        };
 
-        System.out.println("[ Producer - Running ]");
+//        System.out.println("[ Producer - Running ]");
 
         int cont = 0;
-        this.quantidadeImagens = 10;
         int i = 0;
 
         while (true) {
@@ -53,7 +52,7 @@ public class Producer implements Runnable {
 
             try {
                 free.get(i).acquire();
-                System.out.println("[ Producer : Block ]");
+//                System.out.println("[ Producer : Block ]");
 
             } catch (InterruptedException ex) {
                 Logger.getLogger(Producer.class.getName()).log(Level.SEVERE, null, ex);
@@ -67,10 +66,10 @@ public class Producer implements Runnable {
             } catch (IOException e) {
                 System.out.println("Erro: " + e);
             }
-            System.out.println(" - Adding image... " + i );
+//            System.out.println(" - Adding image... " + i );
             buffer.insert(img);
             blocked.get(i).release();
-            System.out.println("[ Producer : Free ]");
+//            System.out.println("[ Producer : Free ]");
 
             cont++;
             i = cont % this.consumidores;

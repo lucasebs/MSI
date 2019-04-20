@@ -14,7 +14,7 @@ public class Consumer implements  Runnable {
     private Semaphore free;
     private Semaphore block;
     private Image img;
-    private ArrayList<Long> tempos;
+    private ArrayList<Long> tempos = new ArrayList<Long>();
     private Long tempoMedio;
 
     public Consumer(Buffer buffer, Semaphore free, Semaphore block) {
@@ -26,15 +26,14 @@ public class Consumer implements  Runnable {
 
     @Override
     public void run() {
-        System.out.println("{ Consumer - Running }");
+//        System.out.println("{ Consumer - Running }");
 
         ProcessadorImagens proc = new ProcessadorImagens();
 
         while(true) {
-            long inicio = System.currentTimeMillis();
             try {
 
-                System.out.println("{ Consumer : Block }");
+//                System.out.println("{ Consumer : Block }");
                 block.acquire();
             } catch (InterruptedException ex) {
                 Logger.getLogger(Consumer.class.getName()).log(Level.SEVERE, null, ex);
@@ -48,11 +47,16 @@ public class Consumer implements  Runnable {
             }
 
             free.release();
-            System.out.println("{ Consumer : Free }");
-            System.out.println(" - Get image '" + this.img.getFile_name() + this.img.getBrilho() +  "' from Buffer...");
+//            System.out.println("{ Consumer : Free }");
+//            System.out.println(" - Get image '" + this.img.getFile_name() + this.img.getBrilho() +  "' from Buffer...");
 
+            long begin = System.currentTimeMillis();
             BufferedImage img_out = proc.brilho(this.img.getImg(), this.img.getBrilho());
-            System.out.println(" - Image '" + this.img.getFile_name() + this.img.getBrilho() +  "' processed...");
+//            System.out.println(" - Image '" + this.img.getFile_name() + this.img.getBrilho() +  "' processed...");
+            long end = System.currentTimeMillis();
+            this.tempos.add(end-begin);
+            System.out.println( "Processing Time per Image / Tempo de Processamento por Imagem" );
+            System.out.println( this.tempos.get(this.tempos.size() - 1) + " Milliseconds / Milissegundos");
 
             try {
 
@@ -61,9 +65,7 @@ public class Consumer implements  Runnable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            System.out.println(" - Image '" + this.img.getFile_name() + this.img.getBrilho() +  "' saved...");
-            long fim = System.currentTimeMillis();
-//            tempos.add(fim-inicio);
+//            System.out.println(" - Image '" + this.img.getFile_name() + this.img.getBrilho() +  "' saved...");
         }
     }
 }

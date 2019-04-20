@@ -32,7 +32,7 @@ public class Principal {
         Producer p = new Producer(buffers,livres, ocupados);
         Thread tp = new Thread(p);
 
-        long inicio = System.currentTimeMillis();
+        long begin = System.currentTimeMillis();
         tp.start();
         for (int i=0;i<quantidadeThreads;i++) {
             threads.get(i).start();
@@ -45,10 +45,8 @@ public class Principal {
                 e.printStackTrace();
             }
         }
-
-        long fim = System.currentTimeMillis();
-
-        System.out.println( "Tempo de execução: " + (fim-inicio) + " milissegundos" );
-
+        long end = System.currentTimeMillis();
+        System.out.println("- Total Processing Time / Tempo de Processamento Total");
+        System.out.println("- " + (end-begin) + " Milliseconds / Milissegundos");
     }
 }
