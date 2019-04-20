@@ -2,7 +2,9 @@ package centralized;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
@@ -39,6 +41,7 @@ public class Producer implements Runnable {
 //        };
 
 //        System.out.println("[ Producer - Running ]");
+
 
         int cont = 0;
         int i = 0;
