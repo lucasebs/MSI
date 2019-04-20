@@ -14,8 +14,8 @@ public class Producer implements Runnable {
     private ArrayList<Buffer> buffers;
     private ArrayList<Semaphore> free;
     private ArrayList<Semaphore> blocked;
-    private Integer consumidores;
-    private Integer quantidadeImagens = 10;
+    private Integer consumers;
+    private Integer imagesQuantity = 10;
 
     private Random r = new Random();
 
@@ -27,14 +27,14 @@ public class Producer implements Runnable {
         this.buffers = buffers;
         this.free = free;
         this.blocked = blocked;
-        this.consumidores = buffers.size();
+        this.consumers = buffers.size();
     }
 
     @Override
     public void run() {
-//        this.qtds = new int[this.consumidores];
+//        this.qtds = new int[this.consumers];
 
-//        for (int i=0;i<this.consumidores;i++ ) {
+//        for (int i=0;i<this.consumers;i++ ) {
 //            this.qtds[i] = r.nextInt(8);
 //        };
 
@@ -44,7 +44,7 @@ public class Producer implements Runnable {
         int i = 0;
 
         while (true) {
-            if (cont >= this.quantidadeImagens) {
+            if (cont >= this.imagesQuantity) {
                 break;
             }
 
@@ -58,24 +58,24 @@ public class Producer implements Runnable {
                 Logger.getLogger(Producer.class.getName()).log(Level.SEVERE, null, ex);
             }
             Image img = null;
-//            System.out.println(cont-(this.quantidadeImagens/2));
+//            System.out.println(cont-(this.imagesQuantity/2));
             try {
                 File f = new File("src/input/"+ this.img_name + this.img_extension);
-//                img = new Image(ImageIO.read(f),this.img_name + "processed_ ",cont-(this.quantidadeImagens/2));
+//                img = new Image(ImageIO.read(f),this.img_name + "processed_ ",cont-(this.imagesQuantity/2));
                 img = new Image(ImageIO.read(f),this.img_name + "_processed_", cont);
             } catch (IOException e) {
                 System.out.println("Erro: " + e);
             }
-//            System.out.println(" - Adding image... " + i );
+//            System.out.println(" - Adding image " + i + "...");
             buffer.insert(img);
             blocked.get(i).release();
 //            System.out.println("[ Producer : Free ]");
 
             cont++;
-            i = cont % this.consumidores;
+            i = cont % this.consumers;
         }
 
-        for (int h=0; h<consumidores;h++){
+        for (int h=0; h < this.consumers ;h++){
             Image img = new Image();
             try {
                 free.get(h).acquire();
