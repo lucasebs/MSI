@@ -1,7 +1,6 @@
 package processor;
 
 import java.awt.image.BufferedImage;
-import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 
 /**
  *
@@ -11,8 +10,6 @@ public class ProcessadorImagens {
 
     public BufferedImage brilho(BufferedImage img, int fator) {
         //cria imagem de saída com mesmo tamanho da imagem de entrada
-        BufferedImage img_out = new BufferedImage(img.getWidth(), img.getHeight(), TYPE_INT_RGB);
-
         for (int i = 0; i < img.getWidth(); i++) {
             for (int j = 0; j < img.getHeight(); j++) {
 
@@ -54,11 +51,11 @@ public class ProcessadorImagens {
                 int pixel_out = (R << 16) | (G << 8) | B;
 
                 //atribui novo valor de pixel na imagem de saída
-                img_out.setRGB(i, j, pixel_out);
+                img.setRGB(i, j, pixel_out);
             }
         }
 
-        return img_out;
+        return img;
     }
 
     public void brilho_intervalo(BufferedImage img, int fator, int limite, BufferedImage img_out) {
