@@ -15,6 +15,7 @@ public class Consumer implements  Runnable {
     private Image img;
     private ArrayList<Long> tempos = new ArrayList<Long>();
     private Long tempoMedio;
+    private String outputPath = "src/output/centralized/";
 
     public Consumer(Buffer buffer, Semaphore free, Semaphore block) {
         System.out.println("{ Consumer - Builded }");
@@ -31,7 +32,7 @@ public class Consumer implements  Runnable {
 
         BufferedWriter writer = null;
         try {
-            writer = new BufferedWriter(new FileWriter("src/output/centralized/log/pti_tpi.txt", true));
+            writer = new BufferedWriter(new FileWriter(this.outputPath + "log/pti_tpi.txt", true));
 
             while(true) {
                 try {
@@ -54,7 +55,7 @@ public class Consumer implements  Runnable {
     //            System.out.println(" - Get image '" + this.img.getFile_name() + this.img.getBrilho() +  "' from Buffer...");
 
                 long begin = System.currentTimeMillis();
-                BufferedImage img_out = proc.brilho(this.img.getImg(), this.img.getBrilho());
+                BufferedImage img_out = proc.brilho(this.img.getImg(), this.img.getBright());
     //            System.out.println(" - Image '" + this.img.getFile_name() + this.img.getBrilho() +  "' processed...");
                 long end = System.currentTimeMillis();
                 this.tempos.add(end-begin);
@@ -69,7 +70,7 @@ public class Consumer implements  Runnable {
 
                 try {
 
-                    File f = new File("src/output/centralized/images/" + this.img.getFile_name() + this.img.getBrilho() + ".jpg");
+                    File f = new File(this.outputPath + "images/" + this.img.getFile_name() + this.img.getBright() + ".jpg");
                     ImageIO.write(img_out, "jpg", f);
                 } catch (IOException e) {
                     e.printStackTrace();
