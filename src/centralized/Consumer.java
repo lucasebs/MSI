@@ -8,6 +8,8 @@ import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import processor.ProcessadorImagens;
+
 public class Consumer implements  Runnable {
     private Buffer buffer;
     private Semaphore free;
