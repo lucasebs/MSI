@@ -5,13 +5,13 @@ import java.awt.image.BufferedImage;
 public class Image {
     private BufferedImage img;
     private String file_name;
-    private int brilho;
+    private int Bright;
     private final boolean ending_image;
 
-    public Image(BufferedImage img, String file_name, int brilho) {
+    public Image(BufferedImage img, String file_name, int Bright) {
         this.img = img;
         this.file_name = file_name;
-        this.brilho = brilho;
+        this.Bright = Bright;
         this.ending_image = false;
     }
     public Image(){
@@ -34,12 +34,12 @@ public class Image {
         this.file_name = file_name;
     }
 
-    public int getBrilho() {
-        return this.brilho;
+    public int getBright() {
+        return this.Bright;
     }
 
-    public void setBrilho(int brilho) {
-        this.brilho = brilho;
+    public void setBright(int Bright) {
+        this.Bright = Bright;
     }
 
     public boolean isEnd() {
