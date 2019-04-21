@@ -48,7 +48,7 @@ public class ImageReceiverClient implements Runnable {
 
                 System.out.println("Imagem recebida...");
 
-                File f2 = new File("video/" + nome + ".jpg");  //output file path
+                File f2 = new File("src/output/distributed/" + nome + ".jpg");  //output file path
                 ImageIO.write(img, "jpg", f2);
                 System.out.println("Imagem salva...");
             }
