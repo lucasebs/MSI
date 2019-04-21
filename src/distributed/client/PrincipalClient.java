@@ -13,7 +13,7 @@ public class PrincipalClient {
         ArrayList<Socket> sockets = new ArrayList<Socket>();
         ArrayList<Thread> threads = new ArrayList<Thread>();
 
-        BufferedReader f = new BufferedReader(new FileReader("font/servers.txt"));
+        BufferedReader f = new BufferedReader(new FileReader("src/input/servers.txt"));
 
         int i = 0;
         String line;
@@ -39,7 +39,7 @@ public class PrincipalClient {
             cont++;
             DataOutputStream output = new DataOutputStream(sockets.get(cont % sockets.size()).getOutputStream());
 
-            File f1 = new File("video/3840_RIGHT_0212"+j+".jpg");
+            File f1 = new File("src/input/3840_RIGHT_0212"+j+".jpg");
 
             InputStream in = new FileInputStream(f1);
 
