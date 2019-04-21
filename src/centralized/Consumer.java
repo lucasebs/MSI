@@ -15,7 +15,7 @@ public class Consumer implements  Runnable {
     private Semaphore free;
     private Semaphore block;
     private Image img;
-    private ArrayList<Long> tempos = new ArrayList<Long>();
+    private ArrayList<Long> times = new ArrayList<Long>();
     private Long tempoMedio;
     private String outputPath = "src/output/centralized/";
 
@@ -60,13 +60,13 @@ public class Consumer implements  Runnable {
                 BufferedImage img_out = proc.brilho(this.img.getImg(), this.img.getBright());
     //            System.out.println(" - Image '" + this.img.getFile_name() + this.img.getBrilho() +  "' processed...");
                 long end = System.currentTimeMillis();
-                this.tempos.add(end-begin);
+                this.times.add(end-begin);
 
                 System.out.println( "Processing Time per Image / Tempo de Processamento por Imagem" );
-                System.out.println( this.tempos.get(this.tempos.size() - 1) + " Milliseconds / Milissegundos");
+                System.out.println( this.times.get(this.times.size() - 1) + " Milliseconds / Milissegundos");
 
 
-                writer.write(String.valueOf(this.tempos.get(this.tempos.size() - 1)));
+                writer.write(String.valueOf(this.times.get(this.times.size() - 1)));
                 writer.newLine();
 
 
