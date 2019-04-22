@@ -14,11 +14,11 @@ public class PrincipalServer {
         try {
 
             InetAddress ia = InetAddress.getByName("localhost");
-            int port = 5002;
+            int port = 5005;
             ServerSocket server = new ServerSocket(port, 10, ia);
 
             while (true) {
-                System.out.println("Aguardando conexão do próximo cliente...");
+                System.out.println("Waiting Client Connection...");
                 Socket sock = server.accept();
 
                 ImageReceiverServer IR = new ImageReceiverServer(sock);
