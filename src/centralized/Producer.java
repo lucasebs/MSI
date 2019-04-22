@@ -14,11 +14,11 @@ public class Producer implements Runnable {
     private ArrayList<Semaphore> free;
     private ArrayList<Semaphore> blocked;
     private Integer consumers;
-    private Integer imagesQuantity = 10;
+//    private Integer imagesQuantity = 10;
 
     private Random r = new Random();
 
-    private String img_name = "sample_image";
+//    private String img_name = "sample_image";
     private String img_extension = ".jpg";
 
     public Producer(ArrayList<Buffer> buffers, ArrayList<Semaphore> free, ArrayList<Semaphore> blocked) {
@@ -39,14 +39,26 @@ public class Producer implements Runnable {
 
 //        System.out.println("[ Producer - Running ]");
 
+        ArrayList<String> result = new ArrayList<String>();
 
+        File folder = new File("src/input/samples/");
+        File[] listOfFiles = folder.listFiles();
+
+        for (int j = 0; j < listOfFiles.length; j++) {
+            result.add(listOfFiles[j].getName());
+        }
+
+
+
+//        while (true) {
         int cont = 0;
         int i = 0;
+        for (String r : result) {
 
-        while (true) {
-            if (cont >= this.imagesQuantity) {
-                break;
-            }
+            String img_name = r.split("\\.")[0];
+//            if (cont >= this.imagesQuantity) {
+//                break;
+//            }
 
             Buffer buffer = buffers.get(i);
 
@@ -60,9 +72,10 @@ public class Producer implements Runnable {
             Image img = null;
 //            System.out.println(cont-(this.imagesQuantity/2));
             try {
-                File f = new File("src/input/"+ this.img_name + this.img_extension);
+                File f = new File("src/input/samples/"+ img_name + this.img_extension);
+                System.out.println(f);
 //                img = new Image(ImageIO.read(f),this.img_name + "processed_ ",cont-(this.imagesQuantity/2));
-                img = new Image(ImageIO.read(f),this.img_name + "_processed_", cont);
+                img = new Image(ImageIO.read(f),img_name + "_processed", 100);
             } catch (IOException e) {
                 System.out.println("Erro: " + e);
             }

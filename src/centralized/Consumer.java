@@ -66,13 +66,14 @@ public class Consumer implements  Runnable {
                 System.out.println( this.times.get(this.times.size() - 1) + " Milliseconds / Milissegundos");
 
 
-                writer.write(String.valueOf(this.times.get(this.times.size() - 1)));
+                writer.write('"' + this.img.getFile_name() + '"' + ';' +
+                        String.valueOf(this.times.get(this.times.size() - 1)));
                 writer.newLine();
 
 
                 try {
 
-                    File f = new File(this.outputPath + "images/" + this.img.getFile_name() + this.img.getBright() + ".jpg");
+                    File f = new File(this.outputPath + "images/" + this.img.getFile_name() + ".jpg");
                     ImageIO.write(img_out, "jpg", f);
                 } catch (IOException e) {
                     e.printStackTrace();
