@@ -34,7 +34,7 @@ public class Consumer implements  Runnable {
 
         BufferedWriter writer = null;
         try {
-            writer = new BufferedWriter(new FileWriter(this.outputPath + "log/pti_tpi.txt", true));
+            writer = new BufferedWriter(new FileWriter(this.outputPath + "log/pti_tpi2.txt", true));
 
             while(true) {
                 try {

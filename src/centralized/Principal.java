@@ -16,7 +16,7 @@ public class Principal {
         ArrayList<Consumer> consumers = new ArrayList<Consumer>();
         ArrayList<Thread> threads = new ArrayList<Thread>();
 
-        Integer threadsQuantity = 3;
+        Integer threadsQuantity = 7;
         String outputPath = "src/output/centralized/";
 
         for (int i=0;i<threadsQuantity;i++) {
@@ -56,7 +56,7 @@ public class Principal {
         BufferedWriter writer = null;
         
         try {
-            writer = new BufferedWriter(new FileWriter(outputPath + "log/tpt.txt"));
+            writer = new BufferedWriter(new FileWriter(outputPath + "log/tpt2.txt"));
             writer.write(String.valueOf(total_processing_time));
             writer.close();
         } catch (IOException e) {
